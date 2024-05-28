@@ -1,6 +1,8 @@
 from Block import Block
-from transact import Transaction
+from transaction import Transaction
 import time
+
+
 class Blockchain:
     def __init__(self, difficulty=2):
         self.chain = [self.create_genesis_block()]
@@ -10,7 +12,7 @@ class Blockchain:
 
     def create_genesis_block(self):
         # Create an initial block with no transactions
-        return Block('0', [], time.time())
+        return Block("0", [], time.time())
 
     def get_latest_block(self):
         return self.chain[-1]

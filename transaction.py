@@ -1,4 +1,6 @@
-from ky import Key
+from key import Key
+
+
 class Transaction:
     def __init__(self, sender, recipient, amount):
         self.sender = sender
@@ -21,4 +23,4 @@ class Transaction:
         return Key().verify(self.to_string(), self.signature, public_key)
 
     def to_string(self):
-        return f'{self.sender}{self.recipient}{self.amount}'
+        return f"{self.sender}{self.recipient}{self.amount}"
