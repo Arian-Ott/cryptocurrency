@@ -1,13 +1,28 @@
+
+
 from ky import Key
 import random
 from Blockchain import Blockchain
 from transact import Transaction
 from tqdm import tqdm
+from fastapi import FastAPI, HTTPException, status
+blockchain = Blockchain(difficulty=2)
+app = FastAPI()
+@app.get("bc/register_wallet")
+async def register_wallet():
+    return Key()
 
+@app.get("bc/get_balance")
+async def get_balance(public_key:str):
+    return blockchain.get_balance(public_key)
+@app.post("/bc/create_transaction")
+async def create_transaction(sender:str, recipient:str, amount:int, passphrase:str):
+    tx = Transaction(sender, recipient, amount)
+    return HTTPException(status_code=200, detail="Transaction successfully created")
 def test_key_class():
-    key_instance = Key()
+    key_instance = Key("abcdertzdfnjfi")
     message = "Test message"
-    signature = key_instance.sign(message)
+    signature = key_instance.sign(message, "abcdertzdfnjfi")
     assert key_instance.verify(message, signature, key_instance.get_public_key()), "Key class test failed"
     print("Key class test passed")
 
